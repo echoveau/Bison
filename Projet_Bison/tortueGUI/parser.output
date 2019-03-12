@@ -1,0 +1,1503 @@
+Grammaire
+
+    0 $accept: tortue $end
+
+    1 tortue: FONCTION MAIN DP main FIN FONCTION NL fonction FIN
+
+    2 nombre: INT
+
+    3 calcul: nombre
+    4       | SUB calcul
+    5       | calcul SOMME calcul
+    6       | calcul MULT calcul
+    7       | calcul SUB calcul
+    8       | calcul DIV calcul
+    9       | PO calcul PF
+
+   10 rotation: DROITE
+   11         | GAUCHE
+
+   12 instruction: AVANCE
+   13            | RECULE
+   14            | SAUTE
+   15            | TOURNE rotation
+
+   16 deplacement: instruction
+   17            | instruction calcul
+   18            | instruction calcul FOIS
+
+   19 deplacement_tortue: deplacement
+   20                   | deplacement IDTORT
+
+   21 direction: DEVANT
+   22          | DERRIERE
+   23          | rotation
+
+   24 condition: MUR direction
+   25          | VIDE direction
+
+   26 couleur: COULEUR zone RRGGBB IDTORT
+   27        | COULEUR zone RRGGBB
+   28        | %empty
+
+   29 zone: %empty
+   30     | CARAPACE
+   31     | MOTIF
+
+   32 arguments: nombre arguments
+   33          | %empty
+
+   34 main: corpsdemain
+   35     | corpsdemain TORTUES nombre corpsdemain
+
+   36 corpsdemain: NL ligne
+
+   37 ligne: deplacement_tortue corpsdemain
+   38      | SI condition DP corpsdemain FIN SI corpsdemain
+   39      | SI condition DP corpsdemain SINON DP corpsdemain FIN SI corpsdemain
+   40      | TANTQUE condition DP corpsdemain FIN TANTQUE corpsdemain
+   41      | REPETE calcul fois DP corpsdemain FIN REPETE corpsdemain
+   42      | couleur corpsdemain
+   43      | NOM arguments corpsdemain
+   44      | JARDIN FICHIER corpsdemain
+   45      | %empty
+
+   46 fonction: FONCTION NOM DP corpsdefonction FIN FONCTION NL fonction
+   47         | %empty
+
+   48 corpsdefonction: NL lignefonction
+
+   49 lignefonction: deplacement_tortue corpsdefonction
+   50              | SI condition DP corpsdefonction FIN SI corpsdefonction
+   51              | SI condition DP corpsdefonction SINON DP corpsdefonction FIN SI corpsdefonction
+   52              | TANTQUE condition DP corpsdefonction FIN TANTQUE corpsdefonction
+   53              | REPETE calcul fois DP corpsdefonction FIN REPETE corpsdefonction
+   54              | NOM arguments corpsdefonction
+   55              | instruction ARGS corpsdefonction
+   56              | instruction ARGS FOIS corpsdefonction
+   57              | %empty
+
+   58 fois: FOIS
+   59     | %empty
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+$end (0) 0
+error (256)
+NL (258) 1 36 46 48
+INT (259) 2
+SOMME (260) 5
+MULT (261) 6
+DIV (262) 8
+SUB (263) 4 7
+PO (264) 9
+PF (265) 9
+FIN (266) 1 38 39 40 41 46 50 51 52 53
+FOIS (267) 18 56 58
+AVANCE (268) 12
+SAUTE (269) 14
+RECULE (270) 13
+TOURNE (271) 15
+GAUCHE (272) 11
+DROITE (273) 10
+IDTORT (274) 20 26
+DEVANT (275) 21
+DERRIERE (276) 22
+MUR (277) 24
+VIDE (278) 25
+SI (279) 38 39 50 51
+DP (280) 1 38 39 40 41 46 50 51 52 53
+SINON (281) 39 51
+TANTQUE (282) 40 52
+REPETE (283) 41 53
+FONCTION (284) 1 46
+MAIN (285) 1
+NOM (286) 43 46 54
+COULEUR (287) 26 27
+RRGGBB (288) 26 27
+CARAPACE (289) 30
+MOTIF (290) 31
+TORTUES (291) 35
+JARDIN (292) 44
+FICHIER (293) 44
+ARGS (294) 55 56
+NEG (295)
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (41)
+    à gauche: 0
+tortue (42)
+    à gauche: 1, à droite: 0
+nombre (43)
+    à gauche: 2, à droite: 3 32 35
+calcul (44)
+    à gauche: 3 4 5 6 7 8 9, à droite: 4 5 6 7 8 9 17 18 41 53
+rotation (45)
+    à gauche: 10 11, à droite: 15 23
+instruction (46)
+    à gauche: 12 13 14 15, à droite: 16 17 18 55 56
+deplacement (47)
+    à gauche: 16 17 18, à droite: 19 20
+deplacement_tortue (48)
+    à gauche: 19 20, à droite: 37 49
+direction (49)
+    à gauche: 21 22 23, à droite: 24 25
+condition (50)
+    à gauche: 24 25, à droite: 38 39 40 50 51 52
+couleur (51)
+    à gauche: 26 27 28, à droite: 42
+zone (52)
+    à gauche: 29 30 31, à droite: 26 27
+arguments (53)
+    à gauche: 32 33, à droite: 32 43 54
+main (54)
+    à gauche: 34 35, à droite: 1
+corpsdemain (55)
+    à gauche: 36, à droite: 34 35 37 38 39 40 41 42 43 44
+ligne (56)
+    à gauche: 37 38 39 40 41 42 43 44 45, à droite: 36
+fonction (57)
+    à gauche: 46 47, à droite: 1 46
+corpsdefonction (58)
+    à gauche: 48, à droite: 46 49 50 51 52 53 54 55 56
+lignefonction (59)
+    à gauche: 49 50 51 52 53 54 55 56 57, à droite: 48
+fois (60)
+    à gauche: 58 59, à droite: 41 53
+
+
+État 0
+
+    0 $accept: . tortue $end
+
+    FONCTION  décalage et aller à l'état 1
+
+    tortue  aller à l'état 2
+
+
+État 1
+
+    1 tortue: FONCTION . MAIN DP main FIN FONCTION NL fonction FIN
+
+    MAIN  décalage et aller à l'état 3
+
+
+État 2
+
+    0 $accept: tortue . $end
+
+    $end  décalage et aller à l'état 4
+
+
+État 3
+
+    1 tortue: FONCTION MAIN . DP main FIN FONCTION NL fonction FIN
+
+    DP  décalage et aller à l'état 5
+
+
+État 4
+
+    0 $accept: tortue $end .
+
+    $défaut  accepter
+
+
+État 5
+
+    1 tortue: FONCTION MAIN DP . main FIN FONCTION NL fonction FIN
+
+    NL  décalage et aller à l'état 6
+
+    main         aller à l'état 7
+    corpsdemain  aller à l'état 8
+
+
+État 6
+
+   36 corpsdemain: NL . ligne
+
+    AVANCE   décalage et aller à l'état 9
+    SAUTE    décalage et aller à l'état 10
+    RECULE   décalage et aller à l'état 11
+    TOURNE   décalage et aller à l'état 12
+    SI       décalage et aller à l'état 13
+    TANTQUE  décalage et aller à l'état 14
+    REPETE   décalage et aller à l'état 15
+    NOM      décalage et aller à l'état 16
+    COULEUR  décalage et aller à l'état 17
+    JARDIN   décalage et aller à l'état 18
+
+    NL        réduction par utilisation de la règle 28 (couleur)
+    $défaut  réduction par utilisation de la règle 45 (ligne)
+
+    instruction         aller à l'état 19
+    deplacement         aller à l'état 20
+    deplacement_tortue  aller à l'état 21
+    couleur             aller à l'état 22
+    ligne               aller à l'état 23
+
+
+État 7
+
+    1 tortue: FONCTION MAIN DP main . FIN FONCTION NL fonction FIN
+
+    FIN  décalage et aller à l'état 24
+
+
+État 8
+
+   34 main: corpsdemain .
+   35     | corpsdemain . TORTUES nombre corpsdemain
+
+    TORTUES  décalage et aller à l'état 25
+
+    $défaut  réduction par utilisation de la règle 34 (main)
+
+
+État 9
+
+   12 instruction: AVANCE .
+
+    $défaut  réduction par utilisation de la règle 12 (instruction)
+
+
+État 10
+
+   14 instruction: SAUTE .
+
+    $défaut  réduction par utilisation de la règle 14 (instruction)
+
+
+État 11
+
+   13 instruction: RECULE .
+
+    $défaut  réduction par utilisation de la règle 13 (instruction)
+
+
+État 12
+
+   15 instruction: TOURNE . rotation
+
+    GAUCHE  décalage et aller à l'état 26
+    DROITE  décalage et aller à l'état 27
+
+    rotation  aller à l'état 28
+
+
+État 13
+
+   38 ligne: SI . condition DP corpsdemain FIN SI corpsdemain
+   39      | SI . condition DP corpsdemain SINON DP corpsdemain FIN SI corpsdemain
+
+    MUR   décalage et aller à l'état 29
+    VIDE  décalage et aller à l'état 30
+
+    condition  aller à l'état 31
+
+
+État 14
+
+   40 ligne: TANTQUE . condition DP corpsdemain FIN TANTQUE corpsdemain
+
+    MUR   décalage et aller à l'état 29
+    VIDE  décalage et aller à l'état 30
+
+    condition  aller à l'état 32
+
+
+État 15
+
+   41 ligne: REPETE . calcul fois DP corpsdemain FIN REPETE corpsdemain
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 37
+
+
+État 16
+
+   43 ligne: NOM . arguments corpsdemain
+
+    INT  décalage et aller à l'état 33
+
+    $défaut  réduction par utilisation de la règle 33 (arguments)
+
+    nombre     aller à l'état 38
+    arguments  aller à l'état 39
+
+
+État 17
+
+   26 couleur: COULEUR . zone RRGGBB IDTORT
+   27        | COULEUR . zone RRGGBB
+
+    CARAPACE  décalage et aller à l'état 40
+    MOTIF     décalage et aller à l'état 41
+
+    $défaut  réduction par utilisation de la règle 29 (zone)
+
+    zone  aller à l'état 42
+
+
+État 18
+
+   44 ligne: JARDIN . FICHIER corpsdemain
+
+    FICHIER  décalage et aller à l'état 43
+
+
+État 19
+
+   16 deplacement: instruction .
+   17            | instruction . calcul
+   18            | instruction . calcul FOIS
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    $défaut  réduction par utilisation de la règle 16 (deplacement)
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 44
+
+
+État 20
+
+   19 deplacement_tortue: deplacement .
+   20                   | deplacement . IDTORT
+
+    IDTORT  décalage et aller à l'état 45
+
+    $défaut  réduction par utilisation de la règle 19 (deplacement_tortue)
+
+
+État 21
+
+   37 ligne: deplacement_tortue . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 46
+
+
+État 22
+
+   42 ligne: couleur . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 47
+
+
+État 23
+
+   36 corpsdemain: NL ligne .
+
+    $défaut  réduction par utilisation de la règle 36 (corpsdemain)
+
+
+État 24
+
+    1 tortue: FONCTION MAIN DP main FIN . FONCTION NL fonction FIN
+
+    FONCTION  décalage et aller à l'état 48
+
+
+État 25
+
+   35 main: corpsdemain TORTUES . nombre corpsdemain
+
+    INT  décalage et aller à l'état 33
+
+    nombre  aller à l'état 49
+
+
+État 26
+
+   11 rotation: GAUCHE .
+
+    $défaut  réduction par utilisation de la règle 11 (rotation)
+
+
+État 27
+
+   10 rotation: DROITE .
+
+    $défaut  réduction par utilisation de la règle 10 (rotation)
+
+
+État 28
+
+   15 instruction: TOURNE rotation .
+
+    $défaut  réduction par utilisation de la règle 15 (instruction)
+
+
+État 29
+
+   24 condition: MUR . direction
+
+    GAUCHE    décalage et aller à l'état 26
+    DROITE    décalage et aller à l'état 27
+    DEVANT    décalage et aller à l'état 50
+    DERRIERE  décalage et aller à l'état 51
+
+    rotation   aller à l'état 52
+    direction  aller à l'état 53
+
+
+État 30
+
+   25 condition: VIDE . direction
+
+    GAUCHE    décalage et aller à l'état 26
+    DROITE    décalage et aller à l'état 27
+    DEVANT    décalage et aller à l'état 50
+    DERRIERE  décalage et aller à l'état 51
+
+    rotation   aller à l'état 52
+    direction  aller à l'état 54
+
+
+État 31
+
+   38 ligne: SI condition . DP corpsdemain FIN SI corpsdemain
+   39      | SI condition . DP corpsdemain SINON DP corpsdemain FIN SI corpsdemain
+
+    DP  décalage et aller à l'état 55
+
+
+État 32
+
+   40 ligne: TANTQUE condition . DP corpsdemain FIN TANTQUE corpsdemain
+
+    DP  décalage et aller à l'état 56
+
+
+État 33
+
+    2 nombre: INT .
+
+    $défaut  réduction par utilisation de la règle 2 (nombre)
+
+
+État 34
+
+    4 calcul: SUB . calcul
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 57
+
+
+État 35
+
+    9 calcul: PO . calcul PF
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 58
+
+
+État 36
+
+    3 calcul: nombre .
+
+    $défaut  réduction par utilisation de la règle 3 (calcul)
+
+
+État 37
+
+    5 calcul: calcul . SOMME calcul
+    6       | calcul . MULT calcul
+    7       | calcul . SUB calcul
+    8       | calcul . DIV calcul
+   41 ligne: REPETE calcul . fois DP corpsdemain FIN REPETE corpsdemain
+
+    SOMME  décalage et aller à l'état 59
+    MULT   décalage et aller à l'état 60
+    DIV    décalage et aller à l'état 61
+    SUB    décalage et aller à l'état 62
+    FOIS   décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 59 (fois)
+
+    fois  aller à l'état 64
+
+
+État 38
+
+   32 arguments: nombre . arguments
+
+    INT  décalage et aller à l'état 33
+
+    $défaut  réduction par utilisation de la règle 33 (arguments)
+
+    nombre     aller à l'état 38
+    arguments  aller à l'état 65
+
+
+État 39
+
+   43 ligne: NOM arguments . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 66
+
+
+État 40
+
+   30 zone: CARAPACE .
+
+    $défaut  réduction par utilisation de la règle 30 (zone)
+
+
+État 41
+
+   31 zone: MOTIF .
+
+    $défaut  réduction par utilisation de la règle 31 (zone)
+
+
+État 42
+
+   26 couleur: COULEUR zone . RRGGBB IDTORT
+   27        | COULEUR zone . RRGGBB
+
+    RRGGBB  décalage et aller à l'état 67
+
+
+État 43
+
+   44 ligne: JARDIN FICHIER . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 68
+
+
+État 44
+
+    5 calcul: calcul . SOMME calcul
+    6       | calcul . MULT calcul
+    7       | calcul . SUB calcul
+    8       | calcul . DIV calcul
+   17 deplacement: instruction calcul .
+   18            | instruction calcul . FOIS
+
+    SOMME  décalage et aller à l'état 59
+    MULT   décalage et aller à l'état 60
+    DIV    décalage et aller à l'état 61
+    SUB    décalage et aller à l'état 62
+    FOIS   décalage et aller à l'état 69
+
+    $défaut  réduction par utilisation de la règle 17 (deplacement)
+
+
+État 45
+
+   20 deplacement_tortue: deplacement IDTORT .
+
+    $défaut  réduction par utilisation de la règle 20 (deplacement_tortue)
+
+
+État 46
+
+   37 ligne: deplacement_tortue corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 37 (ligne)
+
+
+État 47
+
+   42 ligne: couleur corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 42 (ligne)
+
+
+État 48
+
+    1 tortue: FONCTION MAIN DP main FIN FONCTION . NL fonction FIN
+
+    NL  décalage et aller à l'état 70
+
+
+État 49
+
+   35 main: corpsdemain TORTUES nombre . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 71
+
+
+État 50
+
+   21 direction: DEVANT .
+
+    $défaut  réduction par utilisation de la règle 21 (direction)
+
+
+État 51
+
+   22 direction: DERRIERE .
+
+    $défaut  réduction par utilisation de la règle 22 (direction)
+
+
+État 52
+
+   23 direction: rotation .
+
+    $défaut  réduction par utilisation de la règle 23 (direction)
+
+
+État 53
+
+   24 condition: MUR direction .
+
+    $défaut  réduction par utilisation de la règle 24 (condition)
+
+
+État 54
+
+   25 condition: VIDE direction .
+
+    $défaut  réduction par utilisation de la règle 25 (condition)
+
+
+État 55
+
+   38 ligne: SI condition DP . corpsdemain FIN SI corpsdemain
+   39      | SI condition DP . corpsdemain SINON DP corpsdemain FIN SI corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 72
+
+
+État 56
+
+   40 ligne: TANTQUE condition DP . corpsdemain FIN TANTQUE corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 73
+
+
+État 57
+
+    4 calcul: SUB calcul .
+    5       | calcul . SOMME calcul
+    6       | calcul . MULT calcul
+    7       | calcul . SUB calcul
+    8       | calcul . DIV calcul
+
+    $défaut  réduction par utilisation de la règle 4 (calcul)
+
+
+État 58
+
+    5 calcul: calcul . SOMME calcul
+    6       | calcul . MULT calcul
+    7       | calcul . SUB calcul
+    8       | calcul . DIV calcul
+    9       | PO calcul . PF
+
+    SOMME  décalage et aller à l'état 59
+    MULT   décalage et aller à l'état 60
+    DIV    décalage et aller à l'état 61
+    SUB    décalage et aller à l'état 62
+    PF     décalage et aller à l'état 74
+
+
+État 59
+
+    5 calcul: calcul SOMME . calcul
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 75
+
+
+État 60
+
+    6 calcul: calcul MULT . calcul
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 76
+
+
+État 61
+
+    8 calcul: calcul DIV . calcul
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 77
+
+
+État 62
+
+    7 calcul: calcul SUB . calcul
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 78
+
+
+État 63
+
+   58 fois: FOIS .
+
+    $défaut  réduction par utilisation de la règle 58 (fois)
+
+
+État 64
+
+   41 ligne: REPETE calcul fois . DP corpsdemain FIN REPETE corpsdemain
+
+    DP  décalage et aller à l'état 79
+
+
+État 65
+
+   32 arguments: nombre arguments .
+
+    $défaut  réduction par utilisation de la règle 32 (arguments)
+
+
+État 66
+
+   43 ligne: NOM arguments corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 43 (ligne)
+
+
+État 67
+
+   26 couleur: COULEUR zone RRGGBB . IDTORT
+   27        | COULEUR zone RRGGBB .
+
+    IDTORT  décalage et aller à l'état 80
+
+    $défaut  réduction par utilisation de la règle 27 (couleur)
+
+
+État 68
+
+   44 ligne: JARDIN FICHIER corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 44 (ligne)
+
+
+État 69
+
+   18 deplacement: instruction calcul FOIS .
+
+    $défaut  réduction par utilisation de la règle 18 (deplacement)
+
+
+État 70
+
+    1 tortue: FONCTION MAIN DP main FIN FONCTION NL . fonction FIN
+
+    FONCTION  décalage et aller à l'état 81
+
+    $défaut  réduction par utilisation de la règle 47 (fonction)
+
+    fonction  aller à l'état 82
+
+
+État 71
+
+   35 main: corpsdemain TORTUES nombre corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 35 (main)
+
+
+État 72
+
+   38 ligne: SI condition DP corpsdemain . FIN SI corpsdemain
+   39      | SI condition DP corpsdemain . SINON DP corpsdemain FIN SI corpsdemain
+
+    FIN    décalage et aller à l'état 83
+    SINON  décalage et aller à l'état 84
+
+
+État 73
+
+   40 ligne: TANTQUE condition DP corpsdemain . FIN TANTQUE corpsdemain
+
+    FIN  décalage et aller à l'état 85
+
+
+État 74
+
+    9 calcul: PO calcul PF .
+
+    $défaut  réduction par utilisation de la règle 9 (calcul)
+
+
+État 75
+
+    5 calcul: calcul . SOMME calcul
+    5       | calcul SOMME calcul .
+    6       | calcul . MULT calcul
+    7       | calcul . SUB calcul
+    8       | calcul . DIV calcul
+
+    MULT  décalage et aller à l'état 60
+    DIV   décalage et aller à l'état 61
+
+    $défaut  réduction par utilisation de la règle 5 (calcul)
+
+
+État 76
+
+    5 calcul: calcul . SOMME calcul
+    6       | calcul . MULT calcul
+    6       | calcul MULT calcul .
+    7       | calcul . SUB calcul
+    8       | calcul . DIV calcul
+
+    MULT  décalage et aller à l'état 60
+    DIV   décalage et aller à l'état 61
+
+    $défaut  réduction par utilisation de la règle 6 (calcul)
+
+
+État 77
+
+    5 calcul: calcul . SOMME calcul
+    6       | calcul . MULT calcul
+    7       | calcul . SUB calcul
+    8       | calcul . DIV calcul
+    8       | calcul DIV calcul .
+
+    MULT  décalage et aller à l'état 60
+    DIV   décalage et aller à l'état 61
+
+    $défaut  réduction par utilisation de la règle 8 (calcul)
+
+
+État 78
+
+    5 calcul: calcul . SOMME calcul
+    6       | calcul . MULT calcul
+    7       | calcul . SUB calcul
+    7       | calcul SUB calcul .
+    8       | calcul . DIV calcul
+
+    MULT  décalage et aller à l'état 60
+    DIV   décalage et aller à l'état 61
+
+    $défaut  réduction par utilisation de la règle 7 (calcul)
+
+
+État 79
+
+   41 ligne: REPETE calcul fois DP . corpsdemain FIN REPETE corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 86
+
+
+État 80
+
+   26 couleur: COULEUR zone RRGGBB IDTORT .
+
+    $défaut  réduction par utilisation de la règle 26 (couleur)
+
+
+État 81
+
+   46 fonction: FONCTION . NOM DP corpsdefonction FIN FONCTION NL fonction
+
+    NOM  décalage et aller à l'état 87
+
+
+État 82
+
+    1 tortue: FONCTION MAIN DP main FIN FONCTION NL fonction . FIN
+
+    FIN  décalage et aller à l'état 88
+
+
+État 83
+
+   38 ligne: SI condition DP corpsdemain FIN . SI corpsdemain
+
+    SI  décalage et aller à l'état 89
+
+
+État 84
+
+   39 ligne: SI condition DP corpsdemain SINON . DP corpsdemain FIN SI corpsdemain
+
+    DP  décalage et aller à l'état 90
+
+
+État 85
+
+   40 ligne: TANTQUE condition DP corpsdemain FIN . TANTQUE corpsdemain
+
+    TANTQUE  décalage et aller à l'état 91
+
+
+État 86
+
+   41 ligne: REPETE calcul fois DP corpsdemain . FIN REPETE corpsdemain
+
+    FIN  décalage et aller à l'état 92
+
+
+État 87
+
+   46 fonction: FONCTION NOM . DP corpsdefonction FIN FONCTION NL fonction
+
+    DP  décalage et aller à l'état 93
+
+
+État 88
+
+    1 tortue: FONCTION MAIN DP main FIN FONCTION NL fonction FIN .
+
+    $défaut  réduction par utilisation de la règle 1 (tortue)
+
+
+État 89
+
+   38 ligne: SI condition DP corpsdemain FIN SI . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 94
+
+
+État 90
+
+   39 ligne: SI condition DP corpsdemain SINON DP . corpsdemain FIN SI corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 95
+
+
+État 91
+
+   40 ligne: TANTQUE condition DP corpsdemain FIN TANTQUE . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 96
+
+
+État 92
+
+   41 ligne: REPETE calcul fois DP corpsdemain FIN . REPETE corpsdemain
+
+    REPETE  décalage et aller à l'état 97
+
+
+État 93
+
+   46 fonction: FONCTION NOM DP . corpsdefonction FIN FONCTION NL fonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 99
+
+
+État 94
+
+   38 ligne: SI condition DP corpsdemain FIN SI corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 38 (ligne)
+
+
+État 95
+
+   39 ligne: SI condition DP corpsdemain SINON DP corpsdemain . FIN SI corpsdemain
+
+    FIN  décalage et aller à l'état 100
+
+
+État 96
+
+   40 ligne: TANTQUE condition DP corpsdemain FIN TANTQUE corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 40 (ligne)
+
+
+État 97
+
+   41 ligne: REPETE calcul fois DP corpsdemain FIN REPETE . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 101
+
+
+État 98
+
+   48 corpsdefonction: NL . lignefonction
+
+    AVANCE   décalage et aller à l'état 9
+    SAUTE    décalage et aller à l'état 10
+    RECULE   décalage et aller à l'état 11
+    TOURNE   décalage et aller à l'état 12
+    SI       décalage et aller à l'état 102
+    TANTQUE  décalage et aller à l'état 103
+    REPETE   décalage et aller à l'état 104
+    NOM      décalage et aller à l'état 105
+
+    $défaut  réduction par utilisation de la règle 57 (lignefonction)
+
+    instruction         aller à l'état 106
+    deplacement         aller à l'état 20
+    deplacement_tortue  aller à l'état 107
+    lignefonction       aller à l'état 108
+
+
+État 99
+
+   46 fonction: FONCTION NOM DP corpsdefonction . FIN FONCTION NL fonction
+
+    FIN  décalage et aller à l'état 109
+
+
+État 100
+
+   39 ligne: SI condition DP corpsdemain SINON DP corpsdemain FIN . SI corpsdemain
+
+    SI  décalage et aller à l'état 110
+
+
+État 101
+
+   41 ligne: REPETE calcul fois DP corpsdemain FIN REPETE corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 41 (ligne)
+
+
+État 102
+
+   50 lignefonction: SI . condition DP corpsdefonction FIN SI corpsdefonction
+   51              | SI . condition DP corpsdefonction SINON DP corpsdefonction FIN SI corpsdefonction
+
+    MUR   décalage et aller à l'état 29
+    VIDE  décalage et aller à l'état 30
+
+    condition  aller à l'état 111
+
+
+État 103
+
+   52 lignefonction: TANTQUE . condition DP corpsdefonction FIN TANTQUE corpsdefonction
+
+    MUR   décalage et aller à l'état 29
+    VIDE  décalage et aller à l'état 30
+
+    condition  aller à l'état 112
+
+
+État 104
+
+   53 lignefonction: REPETE . calcul fois DP corpsdefonction FIN REPETE corpsdefonction
+
+    INT  décalage et aller à l'état 33
+    SUB  décalage et aller à l'état 34
+    PO   décalage et aller à l'état 35
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 113
+
+
+État 105
+
+   54 lignefonction: NOM . arguments corpsdefonction
+
+    INT  décalage et aller à l'état 33
+
+    $défaut  réduction par utilisation de la règle 33 (arguments)
+
+    nombre     aller à l'état 38
+    arguments  aller à l'état 114
+
+
+État 106
+
+   16 deplacement: instruction .
+   17            | instruction . calcul
+   18            | instruction . calcul FOIS
+   55 lignefonction: instruction . ARGS corpsdefonction
+   56              | instruction . ARGS FOIS corpsdefonction
+
+    INT   décalage et aller à l'état 33
+    SUB   décalage et aller à l'état 34
+    PO    décalage et aller à l'état 35
+    ARGS  décalage et aller à l'état 115
+
+    $défaut  réduction par utilisation de la règle 16 (deplacement)
+
+    nombre  aller à l'état 36
+    calcul  aller à l'état 44
+
+
+État 107
+
+   49 lignefonction: deplacement_tortue . corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 116
+
+
+État 108
+
+   48 corpsdefonction: NL lignefonction .
+
+    $défaut  réduction par utilisation de la règle 48 (corpsdefonction)
+
+
+État 109
+
+   46 fonction: FONCTION NOM DP corpsdefonction FIN . FONCTION NL fonction
+
+    FONCTION  décalage et aller à l'état 117
+
+
+État 110
+
+   39 ligne: SI condition DP corpsdemain SINON DP corpsdemain FIN SI . corpsdemain
+
+    NL  décalage et aller à l'état 6
+
+    corpsdemain  aller à l'état 118
+
+
+État 111
+
+   50 lignefonction: SI condition . DP corpsdefonction FIN SI corpsdefonction
+   51              | SI condition . DP corpsdefonction SINON DP corpsdefonction FIN SI corpsdefonction
+
+    DP  décalage et aller à l'état 119
+
+
+État 112
+
+   52 lignefonction: TANTQUE condition . DP corpsdefonction FIN TANTQUE corpsdefonction
+
+    DP  décalage et aller à l'état 120
+
+
+État 113
+
+    5 calcul: calcul . SOMME calcul
+    6       | calcul . MULT calcul
+    7       | calcul . SUB calcul
+    8       | calcul . DIV calcul
+   53 lignefonction: REPETE calcul . fois DP corpsdefonction FIN REPETE corpsdefonction
+
+    SOMME  décalage et aller à l'état 59
+    MULT   décalage et aller à l'état 60
+    DIV    décalage et aller à l'état 61
+    SUB    décalage et aller à l'état 62
+    FOIS   décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 59 (fois)
+
+    fois  aller à l'état 121
+
+
+État 114
+
+   54 lignefonction: NOM arguments . corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 122
+
+
+État 115
+
+   55 lignefonction: instruction ARGS . corpsdefonction
+   56              | instruction ARGS . FOIS corpsdefonction
+
+    NL    décalage et aller à l'état 98
+    FOIS  décalage et aller à l'état 123
+
+    corpsdefonction  aller à l'état 124
+
+
+État 116
+
+   49 lignefonction: deplacement_tortue corpsdefonction .
+
+    $défaut  réduction par utilisation de la règle 49 (lignefonction)
+
+
+État 117
+
+   46 fonction: FONCTION NOM DP corpsdefonction FIN FONCTION . NL fonction
+
+    NL  décalage et aller à l'état 125
+
+
+État 118
+
+   39 ligne: SI condition DP corpsdemain SINON DP corpsdemain FIN SI corpsdemain .
+
+    $défaut  réduction par utilisation de la règle 39 (ligne)
+
+
+État 119
+
+   50 lignefonction: SI condition DP . corpsdefonction FIN SI corpsdefonction
+   51              | SI condition DP . corpsdefonction SINON DP corpsdefonction FIN SI corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 126
+
+
+État 120
+
+   52 lignefonction: TANTQUE condition DP . corpsdefonction FIN TANTQUE corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 127
+
+
+État 121
+
+   53 lignefonction: REPETE calcul fois . DP corpsdefonction FIN REPETE corpsdefonction
+
+    DP  décalage et aller à l'état 128
+
+
+État 122
+
+   54 lignefonction: NOM arguments corpsdefonction .
+
+    $défaut  réduction par utilisation de la règle 54 (lignefonction)
+
+
+État 123
+
+   56 lignefonction: instruction ARGS FOIS . corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 129
+
+
+État 124
+
+   55 lignefonction: instruction ARGS corpsdefonction .
+
+    $défaut  réduction par utilisation de la règle 55 (lignefonction)
+
+
+État 125
+
+   46 fonction: FONCTION NOM DP corpsdefonction FIN FONCTION NL . fonction
+
+    FONCTION  décalage et aller à l'état 81
+
+    $défaut  réduction par utilisation de la règle 47 (fonction)
+
+    fonction  aller à l'état 130
+
+
+État 126
+
+   50 lignefonction: SI condition DP corpsdefonction . FIN SI corpsdefonction
+   51              | SI condition DP corpsdefonction . SINON DP corpsdefonction FIN SI corpsdefonction
+
+    FIN    décalage et aller à l'état 131
+    SINON  décalage et aller à l'état 132
+
+
+État 127
+
+   52 lignefonction: TANTQUE condition DP corpsdefonction . FIN TANTQUE corpsdefonction
+
+    FIN  décalage et aller à l'état 133
+
+
+État 128
+
+   53 lignefonction: REPETE calcul fois DP . corpsdefonction FIN REPETE corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 134
+
+
+État 129
+
+   56 lignefonction: instruction ARGS FOIS corpsdefonction .
+
+    $défaut  réduction par utilisation de la règle 56 (lignefonction)
+
+
+État 130
+
+   46 fonction: FONCTION NOM DP corpsdefonction FIN FONCTION NL fonction .
+
+    $défaut  réduction par utilisation de la règle 46 (fonction)
+
+
+État 131
+
+   50 lignefonction: SI condition DP corpsdefonction FIN . SI corpsdefonction
+
+    SI  décalage et aller à l'état 135
+
+
+État 132
+
+   51 lignefonction: SI condition DP corpsdefonction SINON . DP corpsdefonction FIN SI corpsdefonction
+
+    DP  décalage et aller à l'état 136
+
+
+État 133
+
+   52 lignefonction: TANTQUE condition DP corpsdefonction FIN . TANTQUE corpsdefonction
+
+    TANTQUE  décalage et aller à l'état 137
+
+
+État 134
+
+   53 lignefonction: REPETE calcul fois DP corpsdefonction . FIN REPETE corpsdefonction
+
+    FIN  décalage et aller à l'état 138
+
+
+État 135
+
+   50 lignefonction: SI condition DP corpsdefonction FIN SI . corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 139
+
+
+État 136
+
+   51 lignefonction: SI condition DP corpsdefonction SINON DP . corpsdefonction FIN SI corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 140
+
+
+État 137
+
+   52 lignefonction: TANTQUE condition DP corpsdefonction FIN TANTQUE . corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 141
+
+
+État 138
+
+   53 lignefonction: REPETE calcul fois DP corpsdefonction FIN . REPETE corpsdefonction
+
+    REPETE  décalage et aller à l'état 142
+
+
+État 139
+
+   50 lignefonction: SI condition DP corpsdefonction FIN SI corpsdefonction .
+
+    $défaut  réduction par utilisation de la règle 50 (lignefonction)
+
+
+État 140
+
+   51 lignefonction: SI condition DP corpsdefonction SINON DP corpsdefonction . FIN SI corpsdefonction
+
+    FIN  décalage et aller à l'état 143
+
+
+État 141
+
+   52 lignefonction: TANTQUE condition DP corpsdefonction FIN TANTQUE corpsdefonction .
+
+    $défaut  réduction par utilisation de la règle 52 (lignefonction)
+
+
+État 142
+
+   53 lignefonction: REPETE calcul fois DP corpsdefonction FIN REPETE . corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 144
+
+
+État 143
+
+   51 lignefonction: SI condition DP corpsdefonction SINON DP corpsdefonction FIN . SI corpsdefonction
+
+    SI  décalage et aller à l'état 145
+
+
+État 144
+
+   53 lignefonction: REPETE calcul fois DP corpsdefonction FIN REPETE corpsdefonction .
+
+    $défaut  réduction par utilisation de la règle 53 (lignefonction)
+
+
+État 145
+
+   51 lignefonction: SI condition DP corpsdefonction SINON DP corpsdefonction FIN SI . corpsdefonction
+
+    NL  décalage et aller à l'état 98
+
+    corpsdefonction  aller à l'état 146
+
+
+État 146
+
+   51 lignefonction: SI condition DP corpsdefonction SINON DP corpsdefonction FIN SI corpsdefonction .
+
+    $défaut  réduction par utilisation de la règle 51 (lignefonction)

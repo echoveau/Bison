@@ -1,0 +1,20 @@
+fonction main:
+	jardin 'test.txt'
+	tortues 5
+	couleur #123456 @2
+	tant que vide derriere:
+		avance
+	fin tant que
+	si mur devant:
+		saute
+		si mur devant:
+			repete 2*8:
+				saute
+			fin repete
+		fin si 
+	sinon :
+		saute
+	fin si
+	saute
+fin fonction
+fin

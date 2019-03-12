@@ -1,0 +1,14 @@
+fonction main:
+	avance 5*(1+2) fois
+	recule 1/(2-3)
+	bar 1 2+2 4
+fin fonction
+
+-- on peut utiliser des expressions à base de +,-,*,/ et ()
+-- dans les arguments des actions/fonctions
+
+
+fonction bar:
+	saute $1 * ($2 + $3)
+fin fonction
+fin
